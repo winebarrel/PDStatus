@@ -10,8 +10,10 @@ import SwiftUI
 @main
 struct PDStatusApp: App {
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        MenuBarExtra {
+            RightClickMenu()
+        } label: {
+            Text("PDStatus")
         }
     }
 }

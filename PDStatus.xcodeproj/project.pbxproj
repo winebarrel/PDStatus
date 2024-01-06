@@ -8,18 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		AD99F7232B48E32500DD7E59 /* PDStatusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD99F7222B48E32500DD7E59 /* PDStatusApp.swift */; };
-		AD99F7252B48E32500DD7E59 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD99F7242B48E32500DD7E59 /* ContentView.swift */; };
 		AD99F7272B48E32600DD7E59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD99F7262B48E32600DD7E59 /* Assets.xcassets */; };
 		AD99F72A2B48E32600DD7E59 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD99F7292B48E32600DD7E59 /* Preview Assets.xcassets */; };
+		ADFA899C2B48E50E00FE71F7 /* RightClickMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AD99F71F2B48E32500DD7E59 /* PDStatus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDStatus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD99F7222B48E32500DD7E59 /* PDStatusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDStatusApp.swift; sourceTree = "<group>"; };
-		AD99F7242B48E32500DD7E59 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AD99F7262B48E32600DD7E59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD99F7292B48E32600DD7E59 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AD99F72B2B48E32600DD7E59 /* PDStatus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PDStatus.entitlements; sourceTree = "<group>"; };
+		ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightClickMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,10 +53,10 @@
 			isa = PBXGroup;
 			children = (
 				AD99F7222B48E32500DD7E59 /* PDStatusApp.swift */,
-				AD99F7242B48E32500DD7E59 /* ContentView.swift */,
 				AD99F7262B48E32600DD7E59 /* Assets.xcassets */,
 				AD99F72B2B48E32600DD7E59 /* PDStatus.entitlements */,
 				AD99F7282B48E32600DD7E59 /* Preview Content */,
+				ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */,
 			);
 			path = PDStatus;
 			sourceTree = "<group>";
@@ -139,7 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD99F7252B48E32500DD7E59 /* ContentView.swift in Sources */,
+				ADFA899C2B48E50E00FE71F7 /* RightClickMenu.swift in Sources */,
 				AD99F7232B48E32500DD7E59 /* PDStatusApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
