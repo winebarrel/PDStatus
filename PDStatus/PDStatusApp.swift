@@ -11,18 +11,31 @@ import SwiftUI
 @main
 struct PDStatusApp: App {
     @State var isMenuPresented: Bool = false
+    private var popover: NSPopover
+
+    init() {
+        popover = NSPopover()
+        popover.behavior = .transient
+        popover.animates = false
+        popover.contentViewController = NSHostingController(rootView: ContentView())
+    }
 
     var body: some Scene {
         MenuBarExtra {
             RightClickMenu()
         } label: {
             Text("PDStatus")
-        }.menuBarExtraAccess(isPresented: $isMenuPresented) { statusItem in
+        }.menuBarExtraAccess(isPresented: self.$isMenuPresented) { statusItem in
             if let button = statusItem.button {
                 let mouseHandlerView = MouseHandlerView(frame: button.frame)
 
                 mouseHandlerView.onMouseDown = {
-                    print("leftMouseDown")
+                    if popover.isShown {
+                        popover.close()
+                    } else {
+                        popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY)
+                        popover.contentViewController?.view.window?.makeKey()
+                    }
                 }
 
                 button.addSubview(mouseHandlerView)

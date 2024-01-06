@@ -13,6 +13,7 @@
 		ADFA899C2B48E50E00FE71F7 /* RightClickMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */; };
 		ADFA899F2B48E81700FE71F7 /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = ADFA899E2B48E81700FE71F7 /* MenuBarExtraAccess */; };
 		ADFA89A12B48E90E00FE71F7 /* MouseHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA89A02B48E90E00FE71F7 /* MouseHandlerView.swift */; };
+		ADFA89A32B48EAE800FE71F7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA89A22B48EAE800FE71F7 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		AD99F72B2B48E32600DD7E59 /* PDStatus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PDStatus.entitlements; sourceTree = "<group>"; };
 		ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightClickMenu.swift; sourceTree = "<group>"; };
 		ADFA89A02B48E90E00FE71F7 /* MouseHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseHandlerView.swift; sourceTree = "<group>"; };
+		ADFA89A22B48EAE800FE71F7 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		AD99F7212B48E32500DD7E59 /* PDStatus */ = {
 			isa = PBXGroup;
 			children = (
+				ADFA89A22B48EAE800FE71F7 /* ContentView.swift */,
 				AD99F7222B48E32500DD7E59 /* PDStatusApp.swift */,
 				AD99F7262B48E32600DD7E59 /* Assets.xcassets */,
 				AD99F72B2B48E32600DD7E59 /* PDStatus.entitlements */,
@@ -152,6 +155,7 @@
 			files = (
 				ADFA899C2B48E50E00FE71F7 /* RightClickMenu.swift in Sources */,
 				AD99F7232B48E32500DD7E59 /* PDStatusApp.swift in Sources */,
+				ADFA89A32B48EAE800FE71F7 /* ContentView.swift in Sources */,
 				ADFA89A12B48E90E00FE71F7 /* MouseHandlerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
