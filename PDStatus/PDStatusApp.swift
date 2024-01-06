@@ -7,6 +7,7 @@
 
 import MenuBarExtraAccess
 import SwiftUI
+import Valet
 
 @main
 struct PDStatusApp: App {

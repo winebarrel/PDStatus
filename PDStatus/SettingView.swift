@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct SettingView: View {
-    @AppStorage("apiKey") private var apiKey = ""
+    @AppSecureStorage("apiKey") private var apiKey
 
     var body: some View {
         Form {
-            TextField("API Key", text: $apiKey)
+            SecureField("API Key", text: $apiKey)
         }
         .padding(20)
         .frame(width: 300, height: 60)
