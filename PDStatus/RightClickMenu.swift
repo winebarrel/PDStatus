@@ -11,6 +11,10 @@ struct RightClickMenu: View {
     func actin() {}
 
     var body: some View {
+        SettingsLink {
+            Text("Settings")
+        }
+        Divider()
         Button("Quit") {
             NSApplication.shared.terminate(self)
         }

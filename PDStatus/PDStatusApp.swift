@@ -41,5 +41,8 @@ struct PDStatusApp: App {
                 button.addSubview(mouseHandlerView)
             }
         }
+        Settings {
+            SettingView()
+        }
     }
 }
