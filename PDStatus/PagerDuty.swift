@@ -43,7 +43,7 @@ class PagerDuty {
     @AppStorage("userId") private var userId = ""
 
     public func myUserID() async -> Result<String, Error> {
-        if !userId.isEmpty {
+        if !userId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return .success(userId)
         }
 
