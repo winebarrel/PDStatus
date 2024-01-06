@@ -27,8 +27,15 @@ struct RightClickMenu: View {
                 }
 
                 switch await pd.onCall(userId: userId) {
-                case .success(let oc):
-                    print(oc)
+                case .success(let onCall):
+                    print(onCall)
+                case .failure(let e):
+                    print(e)
+                }
+
+                switch await pd.myIncidents(userId: userId) {
+                case .success(let incidents):
+                    print(incidents)
                 case .failure(let e):
                     print(e)
                 }

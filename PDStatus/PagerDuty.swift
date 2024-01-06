@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public struct UsersMeResp: Codable {
     public let user: User
@@ -16,9 +17,9 @@ public struct UsersMeResp: Codable {
 }
 
 public struct OncallsResp: Codable {
-    public let oncalls: [Oncalls]
+    public let oncalls: [Oncall]
 
-    public struct Oncalls: Codable {
+    public struct Oncall: Codable {
         public let user: User
 
         public struct User: Codable {
@@ -27,11 +28,25 @@ public struct OncallsResp: Codable {
     }
 }
 
+public struct IncidentsResp: Codable {
+    public let incidents: [Incident]
+
+    public struct Incident: Codable {
+        public let title: String
+        public let htmlUrl: String
+    }
+}
+
 class PagerDuty {
     private let apiEndpoint = URL(string: "https://api.pagerduty.com/")!
     @AppSecureStorage("apiKey") private var apiKey
+    @AppStorage("userId") private var userId = ""
 
     public func myUserID() async -> Result<String, Error> {
+        if !userId.isEmpty {
+            return .success(userId)
+        }
+
         let data: Data
 
         switch await get(path: "/users/me") {
@@ -42,6 +57,7 @@ class PagerDuty {
         }
 
         let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         let resp: UsersMeResp
 
         do {
@@ -64,6 +80,7 @@ class PagerDuty {
         }
 
         let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         let resp: OncallsResp
 
         do {
@@ -73,6 +90,29 @@ class PagerDuty {
         }
 
         return .success(resp.oncalls.count >= 1)
+    }
+
+    public func myIncidents(userId: String) async -> Result<[IncidentsResp.Incident], Error> {
+        let data: Data
+
+        switch await get(path: "/incidents", queryItems: ["user_ids[]": userId]) {
+        case .success(let d):
+            data = d
+        case .failure(let e):
+            return .failure(e)
+        }
+
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let resp: IncidentsResp
+
+        do {
+            resp = try decoder.decode(IncidentsResp.self, from: data)
+        } catch {
+            return .failure(error)
+        }
+
+        return .success(resp.incidents)
     }
 
     private func get(path: String, queryItems: [String: String] = [:]) async -> Result<Data, Error> {
