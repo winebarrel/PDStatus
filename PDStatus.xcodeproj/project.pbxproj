@@ -11,6 +11,8 @@
 		AD99F7272B48E32600DD7E59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD99F7262B48E32600DD7E59 /* Assets.xcassets */; };
 		AD99F72A2B48E32600DD7E59 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD99F7292B48E32600DD7E59 /* Preview Assets.xcassets */; };
 		ADFA899C2B48E50E00FE71F7 /* RightClickMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */; };
+		ADFA899F2B48E81700FE71F7 /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = ADFA899E2B48E81700FE71F7 /* MenuBarExtraAccess */; };
+		ADFA89A12B48E90E00FE71F7 /* MouseHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA89A02B48E90E00FE71F7 /* MouseHandlerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,7 @@
 		AD99F7292B48E32600DD7E59 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AD99F72B2B48E32600DD7E59 /* PDStatus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PDStatus.entitlements; sourceTree = "<group>"; };
 		ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightClickMenu.swift; sourceTree = "<group>"; };
+		ADFA89A02B48E90E00FE71F7 /* MouseHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseHandlerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADFA899F2B48E81700FE71F7 /* MenuBarExtraAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +61,7 @@
 				AD99F72B2B48E32600DD7E59 /* PDStatus.entitlements */,
 				AD99F7282B48E32600DD7E59 /* Preview Content */,
 				ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */,
+				ADFA89A02B48E90E00FE71F7 /* MouseHandlerView.swift */,
 			);
 			path = PDStatus;
 			sourceTree = "<group>";
@@ -85,6 +90,9 @@
 			dependencies = (
 			);
 			name = PDStatus;
+			packageProductDependencies = (
+				ADFA899E2B48E81700FE71F7 /* MenuBarExtraAccess */,
+			);
 			productName = PDStatus;
 			productReference = AD99F71F2B48E32500DD7E59 /* PDStatus.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +121,9 @@
 				Base,
 			);
 			mainGroup = AD99F7162B48E32400DD7E59;
+			packageReferences = (
+				ADFA899D2B48E81700FE71F7 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
+			);
 			productRefGroup = AD99F7202B48E32500DD7E59 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -141,6 +152,7 @@
 			files = (
 				ADFA899C2B48E50E00FE71F7 /* RightClickMenu.swift in Sources */,
 				AD99F7232B48E32500DD7E59 /* PDStatusApp.swift in Sources */,
+				ADFA89A12B48E90E00FE71F7 /* MouseHandlerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +353,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ADFA899D2B48E81700FE71F7 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/MenuBarExtraAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		ADFA899E2B48E81700FE71F7 /* MenuBarExtraAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADFA899D2B48E81700FE71F7 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
+			productName = MenuBarExtraAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AD99F7172B48E32400DD7E59 /* Project object */;
 }
