@@ -9,9 +9,12 @@
 import SwiftUI
 import Valet
 
+enum SharedValet {
+    static let shared = Valet.valet(with: Identifier(nonEmpty: "winebarrel.PDStatus")!, accessibility: .whenUnlocked)
+}
+
 @propertyWrapper
 public struct AppSecureStorage: DynamicProperty {
-    private static let valet = Valet.valet(with: Identifier(nonEmpty: "winebarrel.PDStatus")!, accessibility: .whenUnlocked)
     private let key: String
 
     public init(_ key: String) {
@@ -20,13 +23,13 @@ public struct AppSecureStorage: DynamicProperty {
 
     public var wrappedValue: String {
         get {
-            (try? AppSecureStorage.valet.string(forKey: key)) ?? ""
+            (try? SharedValet.shared.string(forKey: key)) ?? ""
         }
         nonmutating set {
             if !newValue.isEmpty {
-                try? AppSecureStorage.valet.setString(newValue, forKey: key)
+                try? SharedValet.shared.setString(newValue, forKey: key)
             } else {
-                try? AppSecureStorage.valet.removeObject(forKey: key)
+                try? SharedValet.shared.removeObject(forKey: key)
             }
         }
     }
