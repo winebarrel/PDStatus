@@ -16,11 +16,21 @@ struct RightClickMenu: View {
             let pd = PagerDuty()
 
             Task {
+                let userId: String
+
                 switch await pd.getCurrentUserID() {
-                case .success(let userId):
-                    print(userId)
+                case .success(let id):
+                    userId = id
                 case .failure(let e):
-                    print(e.localizedDescription)
+                    print(e)
+                    return
+                }
+
+                switch await pd.onCall(userId: userId) {
+                case .success(let oc):
+                    print(oc)
+                case .failure(let e):
+                    print(e)
                 }
             }
         }

@@ -15,6 +15,18 @@ public struct UsersMeResp: Codable {
     }
 }
 
+public struct OncallsResp: Codable {
+    public let oncalls: [Oncalls]
+
+    public struct Oncalls: Codable {
+        public let user: User
+
+        public struct User: Codable {
+            public let id: String
+        }
+    }
+}
+
 class PagerDuty {
     private let apiEndpoint = URL(string: "https://api.pagerduty.com/")!
     @AppSecureStorage("apiKey") private var apiKey
@@ -39,6 +51,34 @@ class PagerDuty {
         }
 
         return .success(resp.user.id)
+    }
+
+    public func onCall(userId: String) async -> Result<Bool, Error> {
+        let data: Data
+
+        switch await get(path: "/oncalls") {
+        case .success(let d):
+            data = d
+        case .failure(let e):
+            return .failure(e)
+        }
+
+        let decoder = JSONDecoder()
+        let resp: OncallsResp
+
+        do {
+            resp = try decoder.decode(OncallsResp.self, from: data)
+        } catch {
+            return .failure(error)
+        }
+
+        for oncall in resp.oncalls {
+            if oncall.user.id == userId {
+                return .success(true)
+            }
+        }
+
+        return .success(false)
     }
 
     private func get(path: String) async -> Result<Data, Error> {
