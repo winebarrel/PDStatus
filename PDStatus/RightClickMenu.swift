@@ -18,7 +18,7 @@ struct RightClickMenu: View {
             Task {
                 let userId: String
 
-                switch await pd.getCurrentUserID() {
+                switch await pd.myUserID() {
                 case .success(let id):
                     userId = id
                 case .failure(let e):

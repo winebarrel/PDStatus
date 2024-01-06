@@ -31,7 +31,7 @@ class PagerDuty {
     private let apiEndpoint = URL(string: "https://api.pagerduty.com/")!
     @AppSecureStorage("apiKey") private var apiKey
 
-    public func getCurrentUserID() async -> Result<String, Error> {
+    public func myUserID() async -> Result<String, Error> {
         let data: Data
 
         switch await get(path: "/users/me") {
