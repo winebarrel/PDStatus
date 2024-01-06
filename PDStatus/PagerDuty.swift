@@ -56,7 +56,7 @@ class PagerDuty {
     public func onCall(userId: String) async -> Result<Bool, Error> {
         let data: Data
 
-        switch await get(path: "/oncalls") {
+        switch await get(path: "/oncalls", queryItems: ["user_ids[]": userId]) {
         case .success(let d):
             data = d
         case .failure(let e):
@@ -72,17 +72,13 @@ class PagerDuty {
             return .failure(error)
         }
 
-        for oncall in resp.oncalls {
-            if oncall.user.id == userId {
-                return .success(true)
-            }
-        }
-
-        return .success(false)
+        return .success(resp.oncalls.count >= 1)
     }
 
-    private func get(path: String) async -> Result<Data, Error> {
-        let url = apiEndpoint.appendingPathComponent(path)
+    private func get(path: String, queryItems: [String: String] = [:]) async -> Result<Data, Error> {
+        var url = apiEndpoint.appendingPathComponent(path)
+        url.append(queryItems: queryItems.map { k, v in URLQueryItem(name: k, value: v) })
+
         var req = URLRequest(url: url)
         req.setValue("application/json", forHTTPHeaderField: "Accept")
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
