@@ -14,6 +14,7 @@ enum StatusIcon: String {
     case notOnCallWithIncident = "bell.badge.slash"
     case onCallWithoutIncident = "bell.fill"
     case onCallWithIncident = "bell.and.waves.left.and.right.fill"
+    case error = "exclamationmark.triangle"
 }
 
 @main
@@ -21,6 +22,7 @@ struct PDStatusApp: App {
     @State var isMenuPresented: Bool = false
     @State var incidents: [IncidentsResp.Incident] = []
     @State var onCallStatus = StatusIcon.notOnCallWithoutIncident
+    @State var updateError = ""
 
     private var popover: NSPopover = {
         let po = NSPopover()
@@ -35,6 +37,7 @@ struct PDStatusApp: App {
         Task {
             do {
                 let (onCallNow, incs) = try await pd.update()
+                updateError = ""
                 incidents.replaceSubrange(0 ..< incidents.count, with: incs)
 
                 if onCallNow {
@@ -43,7 +46,8 @@ struct PDStatusApp: App {
                     onCallStatus = incs.count == 0 ? .notOnCallWithoutIncident : .notOnCallWithIncident
                 }
             } catch {
-                print(error)
+                onCallStatus = .error
+                updateError = error.localizedDescription
             }
         }
     }
@@ -56,7 +60,7 @@ struct PDStatusApp: App {
             Text("PDStatus")
         }.menuBarExtraAccess(isPresented: self.$isMenuPresented) { statusItem in
             if popover.contentViewController == nil {
-                popover.contentViewController = NSHostingController(rootView: ContentView(incidents: $incidents))
+                popover.contentViewController = NSHostingController(rootView: ContentView(incidents: $incidents, updateError: $updateError))
             }
 
             if let button = statusItem.button {
