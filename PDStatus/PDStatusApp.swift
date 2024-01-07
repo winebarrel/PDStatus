@@ -9,10 +9,18 @@ import MenuBarExtraAccess
 import SwiftUI
 import Valet
 
+enum StatusIcon: String {
+    case notOnCallWithoutIncident = "bell.slash"
+    case notOnCallWithIncident = "bell.badge.slash"
+    case onCallWithoutIncident = "bell.fill"
+    case onCallWithIncident = "bell.and.waves.left.and.right.fill"
+}
+
 @main
 struct PDStatusApp: App {
     @State var isMenuPresented: Bool = false
     @State var incidents: [IncidentsResp.Incident] = []
+    @State var onCallStatus = StatusIcon.notOnCallWithoutIncident
 
     private var popover: NSPopover = {
         let po = NSPopover()
@@ -27,8 +35,13 @@ struct PDStatusApp: App {
         Task {
             do {
                 let (onCallNow, incs) = try await pd.update()
-                print(onCallNow)
                 incidents.replaceSubrange(0 ..< incidents.count, with: incs)
+
+                if onCallNow {
+                    onCallStatus = incs.count == 0 ? .onCallWithoutIncident : .onCallWithIncident
+                } else {
+                    onCallStatus = incs.count == 0 ? .notOnCallWithoutIncident : .notOnCallWithIncident
+                }
             } catch {
                 print(error)
             }
@@ -39,6 +52,7 @@ struct PDStatusApp: App {
         MenuBarExtra {
             RightClickMenu(updateStatus: updateStatus)
         } label: {
+            Image(systemName: onCallStatus.rawValue)
             Text("PDStatus")
         }.menuBarExtraAccess(isPresented: self.$isMenuPresented) { statusItem in
             if popover.contentViewController == nil {
