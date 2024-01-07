@@ -11,15 +11,22 @@ struct ContentView: View {
     @Binding var incidents: [IncidentsResp.Incident]
 
     var body: some View {
-        HStack {
-            VStack {
+        Group {
+            if incidents.count > 0 {
                 List(incidents) { i in
                     Link(destination: URL(string: i.htmlUrl)!) {
                         Text(i.title).multilineTextAlignment(.leading)
                     }
                 }
+            } else {
+                HStack {
+                    Image(systemName: "face.smiling")
+                        .imageScale(.large)
+                    Text("There are no incidents")
+                }
+                .frame(maxWidth: 200)
+                .padding()
             }
-            .padding()
         }
     }
 }
