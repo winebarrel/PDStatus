@@ -31,7 +31,8 @@ public struct OncallsResp: Codable {
 public struct IncidentsResp: Codable {
     public let incidents: [Incident]
 
-    public struct Incident: Codable {
+    public struct Incident: Codable, Identifiable {
+        public let id: String
         public let title: String
         public let htmlUrl: String
     }
