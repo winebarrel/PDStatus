@@ -1,13 +1,6 @@
-//
-//  MouseHandlerView.swift
-//  PDStatus
-//
-//  Created by 菅原元気 on 2024/01/06.
-//
-
+// from https://github.com/orchetect/MenuBarExtraAccess/discussions/2#discussioncomment-5744323
 import SwiftUI
 
-// from https://github.com/orchetect/MenuBarExtraAccess/discussions/2#discussioncomment-5744323
 class MouseHandlerView: NSView {
     var onRightMouseDown: (() -> Void)? = nil
     var onMouseDown: (() -> Void)? = nil

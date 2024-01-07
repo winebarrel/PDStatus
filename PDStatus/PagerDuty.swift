@@ -1,10 +1,3 @@
-//
-//  PagerDuty.swift
-//  PDStatus
-//
-//  Created by 菅原元気 on 2024/01/06.
-//
-
 import Foundation
 import SwiftUI
 

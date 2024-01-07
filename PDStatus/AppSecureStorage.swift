@@ -1,11 +1,4 @@
-//
-//  AppSecureStorage.swift
-//  from https://bsorrentino.github.io/bsorrentino/app/2023/05/29/swiftui-a-property-wrapper-to-secure-settings.html
-//  PDStatus
-//
-//  Created by 菅原元気 on 2024/01/06.
-//
-
+// from https://bsorrentino.github.io/bsorrentino/app/2023/05/29/swiftui-a-property-wrapper-to-secure-settings.html
 import SwiftUI
 import Valet
 
