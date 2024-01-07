@@ -58,6 +58,10 @@ struct PDStatusApp: App {
                 }
 
                 button.addSubview(mouseHandlerView)
+
+                Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { _ in
+                    updateStatus()
+                }.fire()
             }
         }
         Settings {
