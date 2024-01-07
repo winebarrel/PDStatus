@@ -79,6 +79,14 @@ struct PDStatusApp: App {
             Image(systemName: onCallStatus.rawValue)
             Text("PDStatus")
         }.menuBarExtraAccess(isPresented: $isMenuPresented) { statusItem in
+            let userNotificationCenter = UNUserNotificationCenter.current()
+
+            userNotificationCenter.requestAuthorization(options: [.alert, .sound]) { authorized, _ in
+                guard authorized else {
+                    logger.debug("User notificationCentern not authorized")
+                    return
+                }
+            }
 
             if popover.contentViewController == nil {
                 popover.contentViewController = NSHostingController(rootView: ContentView(incidents: $incidents, updateError: $updateError))
