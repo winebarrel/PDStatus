@@ -50,7 +50,7 @@ struct PDStatusApp: App {
 
                 mouseHandlerView.onMouseDown = {
                     if popover.isShown {
-                        popover.close()
+                        popover.performClose(nil)
                     } else {
                         popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY)
                         popover.contentViewController?.view.window?.makeKey()
