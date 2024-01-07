@@ -10,16 +10,10 @@ import SwiftUI
 struct SettingView: View {
     @AppSecureStorage("apiKey") private var apiKey
     @AppStorage("userId") private var userId = ""
-    @AppStorage("interval") private var interval = 60
 
     var body: some View {
         Form {
             SecureField("API Key", text: $apiKey)
-            TextField("Update Interval", value: $interval, format: .number).onSubmit {
-                if interval < 10 {
-                    interval = 10
-                }
-            }
             TextField("User ID (optional)", text: $userId)
         }
         .padding(20)

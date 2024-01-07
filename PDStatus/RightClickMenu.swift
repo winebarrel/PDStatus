@@ -8,20 +8,12 @@
 import SwiftUI
 
 struct RightClickMenu: View {
-    @Binding var incidents: [IncidentsResp.Incident]
+    var updateStatus: () async -> Void
 
     var body: some View {
         Button("Update Manually") {
-            let pd = PagerDuty()
-
             Task {
-                do {
-                    let (onCallNow, incs) = try await pd.update()
-                    print(onCallNow)
-                    incidents.replaceSubrange(0 ..< incidents.count, with: incs)
-                } catch {
-                    print(error)
-                }
+                await updateStatus()
             }
         }
         SettingsLink {
@@ -35,5 +27,7 @@ struct RightClickMenu: View {
 }
 
 #Preview {
-    RightClickMenu(incidents: .constant([]))
+    RightClickMenu(
+        updateStatus: {}
+    )
 }

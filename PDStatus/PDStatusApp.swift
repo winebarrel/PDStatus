@@ -21,9 +21,21 @@ struct PDStatusApp: App {
         return po
     }()
 
+    func updateStatus() async {
+        let pd = PagerDuty()
+
+        do {
+            let (onCallNow, incs) = try await pd.update()
+            print(onCallNow)
+            incidents.replaceSubrange(0 ..< incidents.count, with: incs)
+        } catch {
+            print(error)
+        }
+    }
+
     var body: some Scene {
         MenuBarExtra {
-            RightClickMenu(incidents: $incidents)
+            RightClickMenu(updateStatus: updateStatus)
         } label: {
             Text("PDStatus")
         }.menuBarExtraAccess(isPresented: self.$isMenuPresented) { statusItem in
