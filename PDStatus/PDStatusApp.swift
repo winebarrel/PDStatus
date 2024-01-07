@@ -12,21 +12,25 @@ import Valet
 @main
 struct PDStatusApp: App {
     @State var isMenuPresented: Bool = false
-    private var popover: NSPopover
+    @State var incidents: [IncidentsResp.Incident] = []
 
-    init() {
-        popover = NSPopover()
-        popover.behavior = .transient
-        popover.animates = false
-        popover.contentViewController = NSHostingController(rootView: ContentView())
-    }
+    private var popover: NSPopover = {
+        let po = NSPopover()
+        po.behavior = .transient
+        po.animates = false
+        return po
+    }()
 
     var body: some Scene {
         MenuBarExtra {
-            RightClickMenu()
+            RightClickMenu(incidents: $incidents)
         } label: {
             Text("PDStatus")
         }.menuBarExtraAccess(isPresented: self.$isMenuPresented) { statusItem in
+            if popover.contentViewController == nil {
+                popover.contentViewController = NSHostingController(rootView: ContentView(incidents: $incidents))
+            }
+
             if let button = statusItem.button {
                 let mouseHandlerView = MouseHandlerView(frame: button.frame)
 

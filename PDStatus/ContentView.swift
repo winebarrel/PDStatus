@@ -8,21 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Binding var incidents: [IncidentsResp.Incident]
+
     var body: some View {
         HStack {
-            Spacer()
             VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, world!")
+                List(incidents) { i in
+                    Link(destination: URL(string: i.htmlUrl)!) {
+                        Text(i.title).multilineTextAlignment(.leading)
+                    }
+                }
             }
             .padding()
-            Spacer()
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(incidents: .constant([
+        IncidentsResp.Incident(id: "1", title: "!!! INCIDENT 1 !!!", htmlUrl: "http://example.coo/1"),
+        IncidentsResp.Incident(id: "2", title: "!!! INCIDENT 2 !!!", htmlUrl: "http://example.coo/2"),
+        IncidentsResp.Incident(id: "3", title: "!!! INCIDENT 3 !!!", htmlUrl: "http://example.coo/3"),
+    ]))
 }

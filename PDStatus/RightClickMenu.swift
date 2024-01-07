@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct RightClickMenu: View {
+    @Binding var incidents: [IncidentsResp.Incident]
+
     var body: some View {
         Button("Update Manually") {
             let pd = PagerDuty()
 
             Task {
                 do {
-                    let (onCallNow, incidents) = try await pd.update()
+                    let (onCallNow, incs) = try await pd.update()
                     print(onCallNow)
-                    print(incidents)
+                    incidents.replaceSubrange(0 ..< incidents.count, with: incs)
                 } catch {
                     print(error)
                 }
@@ -33,5 +35,5 @@ struct RightClickMenu: View {
 }
 
 #Preview {
-    RightClickMenu()
+    RightClickMenu(incidents: .constant([]))
 }
