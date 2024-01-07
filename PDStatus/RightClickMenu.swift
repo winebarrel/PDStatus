@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct RightClickMenu: View {
-    var updateStatus: () async -> Void
+    var updateStatus: () -> Void
 
     var body: some View {
         Button("Update Manually") {
-            Task {
-                await updateStatus()
-            }
+            updateStatus()
         }
         SettingsLink {
             Text("Settings")

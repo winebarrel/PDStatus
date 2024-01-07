@@ -21,15 +21,17 @@ struct PDStatusApp: App {
         return po
     }()
 
-    func updateStatus() async {
+    func updateStatus() {
         let pd = PagerDuty()
 
-        do {
-            let (onCallNow, incs) = try await pd.update()
-            print(onCallNow)
-            incidents.replaceSubrange(0 ..< incidents.count, with: incs)
-        } catch {
-            print(error)
+        Task {
+            do {
+                let (onCallNow, incs) = try await pd.update()
+                print(onCallNow)
+                incidents.replaceSubrange(0 ..< incidents.count, with: incs)
+            } catch {
+                print(error)
+            }
         }
     }
 
