@@ -6,7 +6,9 @@
 //
 
 import MenuBarExtraAccess
+import os
 import SwiftUI
+import UserNotifications
 import Valet
 
 enum StatusIcon: String {
@@ -17,20 +19,13 @@ enum StatusIcon: String {
     case error = "exclamationmark.triangle"
 }
 
-typealias Incidents = [IncidentsResp.Incident]
-
-extension Incidents {
-    mutating func replaceAll(_ newIncidents: Incidents) {
-        replaceSubrange(0 ..< count, with: newIncidents)
-    }
-}
-
 @main
 struct PDStatusApp: App {
     @State var isMenuPresented: Bool = false
     @State var incidents: Incidents = []
     @State var onCallStatus = StatusIcon.notOnCallWithoutIncident
     @State var updateError = ""
+    private let logger = Logger(subsystem: "winebarrel.PDStatus", category: "Application")
 
     private var popover: NSPopover = {
         let po = NSPopover()
@@ -46,12 +41,28 @@ struct PDStatusApp: App {
             do {
                 let (onCallNow, incs) = try await pd.update()
                 updateError = ""
+                let newIncs = incs - incidents
                 incidents.replaceAll(incs)
 
                 if onCallNow {
                     onCallStatus = incs.count == 0 ? .onCallWithoutIncident : .onCallWithIncident
                 } else {
                     onCallStatus = incs.count == 0 ? .notOnCallWithoutIncident : .notOnCallWithIncident
+                }
+
+                if newIncs.count > 0 {
+                    Task {
+                        let userNotificationCenter = UNUserNotificationCenter.current()
+
+                        for i in newIncs {
+                            let content = UNMutableNotificationContent()
+                            content.title = i.title
+                            content.userInfo = ["url": i.htmlUrl]
+                            content.sound = UNNotificationSound.default
+                            let req = UNNotificationRequest(identifier: "winebarrel.PDStatus.\(i.id)", content: content, trigger: nil)
+                            try? await userNotificationCenter.add(req)
+                        }
+                    }
                 }
             } catch {
                 onCallStatus = .error
@@ -60,6 +71,7 @@ struct PDStatusApp: App {
         }
     }
 
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         MenuBarExtra {
             RightClickMenu(updateStatus: updateStatus)
@@ -67,6 +79,7 @@ struct PDStatusApp: App {
             Image(systemName: onCallStatus.rawValue)
             Text("PDStatus")
         }.menuBarExtraAccess(isPresented: $isMenuPresented) { statusItem in
+
             if popover.contentViewController == nil {
                 popover.contentViewController = NSHostingController(rootView: ContentView(incidents: $incidents, updateError: $updateError))
             }
@@ -93,5 +106,20 @@ struct PDStatusApp: App {
         Settings {
             SettingView()
         }
+    }
+}
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        UNUserNotificationCenter.current().delegate = self
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        let url = URL(string: userInfo["url"] as! String)!
+        NSWorkspace.shared.open(url)
+        completionHandler()
     }
 }

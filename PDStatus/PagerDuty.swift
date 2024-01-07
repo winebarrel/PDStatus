@@ -38,12 +38,25 @@ public struct IncidentsResp: Codable {
     }
 }
 
+typealias Incidents = [IncidentsResp.Incident]
+
+extension Incidents {
+    mutating func replaceAll(_ newIncidents: Incidents) {
+        replaceSubrange(0 ..< count, with: newIncidents)
+    }
+}
+
+func - (left: Incidents, right: Incidents) -> Incidents {
+    let rightIDs = right.map { $0.id }
+    return left.filter { !rightIDs.contains($0.id) }
+}
+
 class PagerDuty {
     private let apiEndpoint = URL(string: "https://api.pagerduty.com/")!
     @AppSecureStorage("apiKey") private var apiKey
     @AppStorage("userId") private var userId = ""
 
-    public func update() async throws -> (Bool, [IncidentsResp.Incident]) {
+    public func update() async throws -> (Bool, Incidents) {
         let userId = try await myUserID()
         let onCallNow = try await onCall(userId: userId)
         let incidents = try await myIncidents(userId: userId)
@@ -73,7 +86,7 @@ class PagerDuty {
         return resp.oncalls.count >= 1
     }
 
-    public func myIncidents(userId: String) async throws -> [IncidentsResp.Incident] {
+    public func myIncidents(userId: String) async throws -> Incidents {
         let data = try await get(path: "/incidents", queryItems: ["user_ids[]": userId])
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
