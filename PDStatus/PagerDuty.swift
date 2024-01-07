@@ -110,7 +110,7 @@ enum PagerDutyError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .respNotOK(let resp):
+        case let .respNotOK(resp):
             let statusCode = resp.statusCode
             let statusMessage = HTTPURLResponse.localizedString(forStatusCode: statusCode)
             return "PagerDuty API error: \(statusCode) \(statusMessage)"

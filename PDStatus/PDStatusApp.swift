@@ -17,10 +17,18 @@ enum StatusIcon: String {
     case error = "exclamationmark.triangle"
 }
 
+typealias Incidents = [IncidentsResp.Incident]
+
+extension Incidents {
+    mutating func replaceAll(_ newIncidents: Incidents) {
+        replaceSubrange(0 ..< count, with: newIncidents)
+    }
+}
+
 @main
 struct PDStatusApp: App {
     @State var isMenuPresented: Bool = false
-    @State var incidents: [IncidentsResp.Incident] = []
+    @State var incidents: Incidents = []
     @State var onCallStatus = StatusIcon.notOnCallWithoutIncident
     @State var updateError = ""
 
@@ -38,7 +46,7 @@ struct PDStatusApp: App {
             do {
                 let (onCallNow, incs) = try await pd.update()
                 updateError = ""
-                incidents.replaceSubrange(0 ..< incidents.count, with: incs)
+                incidents.replaceAll(incs)
 
                 if onCallNow {
                     onCallStatus = incs.count == 0 ? .onCallWithoutIncident : .onCallWithIncident
@@ -58,7 +66,7 @@ struct PDStatusApp: App {
         } label: {
             Image(systemName: onCallStatus.rawValue)
             Text("PDStatus")
-        }.menuBarExtraAccess(isPresented: self.$isMenuPresented) { statusItem in
+        }.menuBarExtraAccess(isPresented: $isMenuPresented) { statusItem in
             if popover.contentViewController == nil {
                 popover.contentViewController = NSHostingController(rootView: ContentView(incidents: $incidents, updateError: $updateError))
             }

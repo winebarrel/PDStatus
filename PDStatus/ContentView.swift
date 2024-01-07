@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var incidents: [IncidentsResp.Incident]
+    @Binding var incidents: Incidents
     @Binding var updateError: String
 
     var body: some View {
