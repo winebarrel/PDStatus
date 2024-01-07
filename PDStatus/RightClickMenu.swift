@@ -9,33 +9,16 @@ import SwiftUI
 
 struct RightClickMenu: View {
     var body: some View {
-        // TODO: debug
-        Button("Test") {
+        Button("Update Manually") {
             let pd = PagerDuty()
 
             Task {
-                let userId: String
-
-                switch await pd.myUserID() {
-                case .success(let id):
-                    userId = id
-                case .failure(let e):
-                    print(e)
-                    return
-                }
-
-                switch await pd.onCall(userId: userId) {
-                case .success(let onCall):
-                    print(onCall)
-                case .failure(let e):
-                    print(e)
-                }
-
-                switch await pd.myIncidents(userId: userId) {
-                case .success(let incidents):
+                do {
+                    let (onCallNow, incidents) = try await pd.update()
+                    print(onCallNow)
                     print(incidents)
-                case .failure(let e):
-                    print(e)
+                } catch {
+                    print(error)
                 }
             }
         }

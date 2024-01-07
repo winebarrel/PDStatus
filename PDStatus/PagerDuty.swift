@@ -42,80 +42,46 @@ class PagerDuty {
     @AppSecureStorage("apiKey") private var apiKey
     @AppStorage("userId") private var userId = ""
 
-    public func myUserID() async -> Result<String, Error> {
+    public func update() async throws -> (Bool, [IncidentsResp.Incident]) {
+        let userId = try await myUserID()
+        let onCallNow = try await onCall(userId: userId)
+        let incidents = try await myIncidents(userId: userId)
+
+        return (onCallNow, incidents)
+    }
+
+    public func myUserID() async throws -> String {
         if !userId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return .success(userId)
+            return userId
         }
 
-        let data: Data
-
-        switch await get(path: "/users/me") {
-        case .success(let d):
-            data = d
-        case .failure(let e):
-            return .failure(e)
-        }
-
+        let data = try await get(path: "/users/me")
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let resp: UsersMeResp
+        let resp = try decoder.decode(UsersMeResp.self, from: data)
 
-        do {
-            resp = try decoder.decode(UsersMeResp.self, from: data)
-        } catch {
-            return .failure(error)
-        }
-
-        return .success(resp.user.id)
+        return resp.user.id
     }
 
-    public func onCall(userId: String) async -> Result<Bool, Error> {
-        let data: Data
-
-        switch await get(path: "/oncalls", queryItems: ["user_ids[]": userId]) {
-        case .success(let d):
-            data = d
-        case .failure(let e):
-            return .failure(e)
-        }
-
+    public func onCall(userId: String) async throws -> Bool {
+        let data = try await get(path: "/oncalls", queryItems: ["user_ids[]": userId])
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let resp: OncallsResp
+        let resp = try decoder.decode(OncallsResp.self, from: data)
 
-        do {
-            resp = try decoder.decode(OncallsResp.self, from: data)
-        } catch {
-            return .failure(error)
-        }
-
-        return .success(resp.oncalls.count >= 1)
+        return resp.oncalls.count >= 1
     }
 
-    public func myIncidents(userId: String) async -> Result<[IncidentsResp.Incident], Error> {
-        let data: Data
-
-        switch await get(path: "/incidents", queryItems: ["user_ids[]": userId]) {
-        case .success(let d):
-            data = d
-        case .failure(let e):
-            return .failure(e)
-        }
-
+    public func myIncidents(userId: String) async throws -> [IncidentsResp.Incident] {
+        let data = try await get(path: "/incidents", queryItems: ["user_ids[]": userId])
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let resp: IncidentsResp
+        let resp = try decoder.decode(IncidentsResp.self, from: data)
 
-        do {
-            resp = try decoder.decode(IncidentsResp.self, from: data)
-        } catch {
-            return .failure(error)
-        }
-
-        return .success(resp.incidents)
+        return resp.incidents
     }
 
-    private func get(path: String, queryItems: [String: String] = [:]) async -> Result<Data, Error> {
+    private func get(path: String, queryItems: [String: String] = [:]) async throws -> Data {
         var url = apiEndpoint.appendingPathComponent(path)
         url.append(queryItems: queryItems.map { k, v in URLQueryItem(name: k, value: v) })
 
@@ -126,19 +92,15 @@ class PagerDuty {
         let data: Data
         let resp: HTTPURLResponse
 
-        do {
-            let (d, r) = try await URLSession.shared.data(for: req)
-            data = d
-            resp = r as! HTTPURLResponse
-        } catch {
-            return .failure(error)
-        }
+        let (d, r) = try await URLSession.shared.data(for: req)
+        data = d
+        resp = r as! HTTPURLResponse
 
         if resp.statusCode != 200 {
-            return .failure(PagerDutyError.respNotOK(resp))
+            throw PagerDutyError.respNotOK(resp)
         }
 
-        return .success(data)
+        return data
     }
 }
 
