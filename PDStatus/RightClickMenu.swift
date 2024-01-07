@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct RightClickMenu: View {
-    func actin() {}
-
     var body: some View {
         // TODO: debug
         Button("Test") {
