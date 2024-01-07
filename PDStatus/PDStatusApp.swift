@@ -112,7 +112,7 @@ struct PDStatusApp: App {
             }
         }
         Settings {
-            SettingView()
+            SettingView(updateStatus: updateStatus)
         }
     }
 }

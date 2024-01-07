@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RightClickMenu: View {
-    var updateStatus: () -> Void
+    let updateStatus: () -> Void
 
     var body: some View {
         Button("Update Manually") {
