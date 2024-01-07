@@ -70,7 +70,7 @@ struct PDStatusApp: App {
             RightClickMenu(updateStatus: updateStatus)
         } label: {
             Image(systemName: onCallStatus.rawValue)
-            Text("PDStatus")
+            Text("PD").foregroundStyle(Color.blue)
         }.menuBarExtraAccess(isPresented: $isMenuPresented) { statusItem in
             let userNotificationCenter = UNUserNotificationCenter.current()
 
