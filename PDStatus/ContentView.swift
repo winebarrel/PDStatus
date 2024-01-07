@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @Binding var incidents: Incidents
     @Binding var updateError: String
+    @State var hoverId: String = ""
 
     var body: some View {
         if !updateError.isEmpty {
@@ -18,7 +19,12 @@ struct ContentView: View {
         } else if incidents.count > 0 {
             List(incidents) { i in
                 Link(destination: URL(string: i.htmlUrl)!) {
-                    Text(i.title).multilineTextAlignment(.leading)
+                    Text(i.title)
+                        .multilineTextAlignment(.leading)
+                }
+                .underline(hoverId == i.id)
+                .onHover { hovering in
+                    hoverId = hovering ? i.id : ""
                 }
             }
         } else {
