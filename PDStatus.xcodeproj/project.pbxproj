@@ -66,16 +66,16 @@
 		AD99F7212B48E32500DD7E59 /* PDStatus */ = {
 			isa = PBXGroup;
 			children = (
-				ADFA89A22B48EAE800FE71F7 /* ContentView.swift */,
-				AD99F7222B48E32500DD7E59 /* PDStatusApp.swift */,
-				AD99F7262B48E32600DD7E59 /* Assets.xcassets */,
 				AD99F72B2B48E32600DD7E59 /* PDStatus.entitlements */,
-				AD99F7282B48E32600DD7E59 /* Preview Content */,
-				ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */,
-				ADFA89A02B48E90E00FE71F7 /* MouseHandlerView.swift */,
-				ADFA89A62B48EC2C00FE71F7 /* SettingView.swift */,
 				ADBD8BAD2B4901C4005B4881 /* AppSecureStorage.swift */,
+				ADFA89A22B48EAE800FE71F7 /* ContentView.swift */,
+				ADFA89A02B48E90E00FE71F7 /* MouseHandlerView.swift */,
 				ADBD8BAF2B4914D3005B4881 /* PagerDuty.swift */,
+				AD99F7222B48E32500DD7E59 /* PDStatusApp.swift */,
+				ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */,
+				ADFA89A62B48EC2C00FE71F7 /* SettingView.swift */,
+				AD99F7262B48E32600DD7E59 /* Assets.xcassets */,
+				AD99F7282B48E32600DD7E59 /* Preview Content */,
 			);
 			path = PDStatus;
 			sourceTree = "<group>";
