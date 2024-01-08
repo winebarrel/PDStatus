@@ -4,6 +4,10 @@
 
 PDStatus is a utility app that shows PagerDuty status on the menu bar.
 
+## Installation
+
+Download app from [releases page](https://github.com/winebarrel/PDStatus/releases/latest).
+
 ## Features
 
 ### Show assigned incidents
