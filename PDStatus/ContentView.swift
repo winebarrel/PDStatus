@@ -41,6 +41,7 @@ struct ContentView: View {
     }
 }
 
+#if swift(>=5.9)
 #Preview {
     ContentView(
         incidents: .constant([
@@ -51,3 +52,4 @@ struct ContentView: View {
         updateError: .constant("")
     )
 }
+#endif

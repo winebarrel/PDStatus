@@ -18,6 +18,8 @@ struct SettingView: View {
     }
 }
 
+#if swift(>=5.9)
 #Preview {
     SettingView(updateStatus: {})
 }
+#endif

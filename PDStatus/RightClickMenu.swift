@@ -17,6 +17,8 @@ struct RightClickMenu: View {
     }
 }
 
+#if swift(>=5.9)
 #Preview {
     RightClickMenu(updateStatus: {})
 }
+#endif
