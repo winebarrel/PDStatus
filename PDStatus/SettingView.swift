@@ -21,7 +21,7 @@ struct SettingView: View {
                             try SMAppService.mainApp.unregister()
                         }
                     } catch {
-                        Log.shared.debug("Failed to set 'Launch at login': \(error)")
+                        Log.shared.debug("failed to set 'Launch at login': \(error)")
                     }
                 }
             #endif
