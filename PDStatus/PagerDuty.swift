@@ -45,7 +45,7 @@ func - (left: Incidents, right: Incidents) -> Incidents {
     return left.filter { !rightIDs.contains($0.id) }
 }
 
-class PagerDuty {
+struct PagerDuty {
     private let apiEndpoint = URL(string: "https://api.pagerduty.com/")!
     @AppSecureStorage("apiKey") private var apiKey
     @AppStorage("userId") private var userId = ""
