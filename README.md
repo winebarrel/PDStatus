@@ -32,5 +32,5 @@ Download app from [releases page](https://github.com/winebarrel/PDStatus/release
 1. [Generate a User Token REST API Key.](https://support.pagerduty.com/docs/api-access-keys#generate-a-user-token-rest-api-key)
 2. Set API Key.
 
-![](https://github.com/winebarrel/PDStatus/assets/117768/21364662-aa1d-4cfc-a6e7-7c3aa8041d26)
+![](https://github.com/winebarrel/PDStatus/assets/117768/902346eb-0e02-422f-8653-cb1aa2f42728)
 ![](https://github.com/winebarrel/PDStatus/assets/117768/0202f49a-e739-43f9-b8b2-37e8e4b9dee8)
