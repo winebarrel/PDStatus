@@ -58,6 +58,17 @@ class PagerDuty {
         return (onCallNow, incidents)
     }
 
+    public func myIncidentsURL() async throws -> URL {
+        let user = try await myUser()
+        let url = URL(string: user.htmlUrl)!
+        let uid = userId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? user.id : userId
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+        components.path = "/incidents"
+        components.query = "assignedToUser=\(uid)"
+
+        return components.url!
+    }
+
     public func myOnCallShiftsURL() async throws -> URL {
         let user = try await myUser()
         let url = URL(string: user.htmlUrl)!
