@@ -2,8 +2,8 @@
 import SwiftUI
 
 class MouseHandlerView: NSView {
-    var onRightMouseDown: (() -> Void)? = nil
-    var onMouseDown: (() -> Void)? = nil
+    var onRightMouseDown: (() -> Void)?
+    var onMouseDown: (() -> Void)?
 
     override func rightMouseDown(with event: NSEvent) {
         if let onRightMouseDown {

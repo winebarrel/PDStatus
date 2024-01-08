@@ -90,18 +90,18 @@ class PagerDuty {
 
     private func get(path: String, queryItems: [String: String] = [:]) async throws -> Data {
         var url = apiEndpoint.appendingPathComponent(path)
-        url.append(queryItems: queryItems.map { k, v in URLQueryItem(name: k, value: v) })
+        url.append(queryItems: queryItems.map { key, val in URLQueryItem(name: key, value: val) })
 
         var req = URLRequest(url: url)
         req.setValue("application/json", forHTTPHeaderField: "Accept")
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.setValue("Token token=\(apiKey)", forHTTPHeaderField: "Authorization")
-        let data: Data
-        let resp: HTTPURLResponse
 
-        let (d, r) = try await URLSession.shared.data(for: req)
-        data = d
-        resp = r as! HTTPURLResponse
+        let (data, rawResp) = try await URLSession.shared.data(for: req)
+
+        guard let resp = rawResp as? HTTPURLResponse else {
+            fatalError("failed to cast URLResponse to HTTPURLResponse")
+        }
 
         if resp.statusCode != 200 {
             throw PagerDutyError.respNotOK(resp)
