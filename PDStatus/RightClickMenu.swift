@@ -4,6 +4,18 @@ struct RightClickMenu: View {
     let updateStatus: () -> Void
 
     var body: some View {
+        Button("My Incidents") {
+            let pdcli = PagerDuty()
+
+            Task {
+                do {
+                    let url = try await pdcli.myIncidentsURL()
+                    NSWorkspace.shared.open(url)
+                } catch {
+                    Log.shared.debug("failed to open 'My Incidents': \(error)")
+                }
+            }
+        }
         Button("My On-Call Shifts") {
             let pdcli = PagerDuty()
 
@@ -16,6 +28,7 @@ struct RightClickMenu: View {
                 }
             }
         }
+        Divider()
         Button("Update Manually") {
             updateStatus()
         }
