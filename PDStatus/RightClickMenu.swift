@@ -19,11 +19,13 @@ struct RightClickMenu: View {
         Button("Update Manually") {
             updateStatus()
         }
-        #if swift(>=5.9)
+#if swift(>=5.9)
         SettingsLink {
             Text("Settings")
         }
-        #endif
+#else
+        #warning("requires swift 5.9 or higher")
+#endif
         Divider()
         Button("Quit") {
             NSApplication.shared.terminate(self)
