@@ -29,4 +29,3 @@ PDStatus is a utility app that shows PagerDuty status on the menu bar.
 2. Set API Key.
 
 ![](https://github.com/winebarrel/PDStatus/assets/117768/21364662-aa1d-4cfc-a6e7-7c3aa8041d26) ![](https://github.com/winebarrel/PDStatus/assets/117768/7379a906-d5ff-44dc-8a27-d0e5c5ca9517)
-
