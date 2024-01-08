@@ -14,7 +14,7 @@ Download app from [releases page](https://github.com/winebarrel/PDStatus/release
 
 ### Show assigned incidents
 
-![](https://github.com/winebarrel/PDStatus/assets/117768/ce4b8336-b3b3-4deb-a180-7b7d642d951a)
+![](https://github.com/winebarrel/PDStatus/assets/117768/3f1dfb6d-0086-4ccf-94f1-6f4725e833e6)
 
 ### Notifications
 

@@ -18,6 +18,7 @@ struct PDStatusApp: App {
     @State var onCallStatus = StatusIcon.notOnCallWithoutIncident
     @State var updateError = ""
     @State var apiKey = ""
+    @State var updatedAt: Date?
 
     private var popover: NSPopover = {
         let pop = NSPopover()
@@ -56,6 +57,8 @@ struct PDStatusApp: App {
                         }
                     }
                 }
+
+                updatedAt = Date()
             } catch {
                 if showError {
                     onCallStatus = .error
@@ -94,7 +97,8 @@ struct PDStatusApp: App {
             }
 
             if popover.contentViewController == nil {
-                popover.contentViewController = NSHostingController(rootView: ContentView(incidents: $incidents, updateError: $updateError))
+                let view = ContentView(incidents: $incidents, updateError: $updateError, updatedAt: $updatedAt)
+                popover.contentViewController = NSHostingController(rootView: view)
             }
 
             if let button = statusItem.button {

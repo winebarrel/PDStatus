@@ -3,41 +3,59 @@ import SwiftUI
 struct ContentView: View {
     @Binding var incidents: Incidents
     @Binding var updateError: String
+    @Binding var updatedAt: Date?
     @State var hoverId: String = ""
+    private let dateFmt = {
+        let dtfmt = DateFormatter()
+        dtfmt.dateStyle = .none
+        dtfmt.timeStyle = .short
+        return dtfmt
+    }()
 
     var body: some View {
-        if !updateError.isEmpty {
-            List {
-                HStack {
-                    Spacer()
-                    Image(systemName: "exclamationmark.triangle")
-                        .imageScale(.large)
-                    Text(updateError)
-                    Spacer()
+        VStack {
+            if !updateError.isEmpty {
+                List {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "exclamationmark.triangle")
+                            .imageScale(.large)
+                        Text(updateError)
+                        Spacer()
+                    }
+                }
+            } else if incidents.count > 0 {
+                List(incidents) { inc in
+                    Link(destination: URL(string: inc.htmlUrl)!) {
+                        Text(inc.title)
+                            .multilineTextAlignment(.leading)
+                    }
+                    .underline(hoverId == inc.id)
+                    .onHover { hovering in
+                        hoverId = hovering ? inc.id : ""
+                    }
+                }
+            } else {
+                List {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "face.smiling")
+                            .imageScale(.large)
+                        Text("There are no incidents")
+                        Spacer()
+                    }
                 }
             }
-        } else if incidents.count > 0 {
-            List(incidents) { inc in
-                Link(destination: URL(string: inc.htmlUrl)!) {
-                    Text(inc.title)
-                        .multilineTextAlignment(.leading)
-                }
-                .underline(hoverId == inc.id)
-                .onHover { hovering in
-                    hoverId = hovering ? inc.id : ""
+            HStack {
+                Image(systemName: "clock.arrow.circlepath")
+                if let upd = updatedAt {
+                    Text(dateFmt.string(from: upd))
+                } else {
+                    Text("-")
                 }
             }
-        } else {
-            List {
-                HStack {
-                    Spacer()
-                    Image(systemName: "face.smiling")
-                        .imageScale(.large)
-                    Text("There are no incidents")
-                    Spacer()
-                }
-            }
-        }
+            .padding(.bottom, 5)
+        }.background(.background)
     }
 }
 
@@ -49,7 +67,8 @@ struct ContentView: View {
             IncidentsResp.Incident(id: "2", title: "!!! INCIDENT 2 !!!", htmlUrl: "http://example.coo/2"),
             IncidentsResp.Incident(id: "3", title: "!!! INCIDENT 3 !!!", htmlUrl: "http://example.coo/3")
         ]),
-        updateError: .constant("")
+        updateError: .constant(""),
+        updatedAt: .constant(Date())
     )
 }
 #endif
