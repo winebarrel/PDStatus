@@ -4,6 +4,8 @@
 
 PDStatus is a utility app that shows PagerDuty status on the menu bar.
 
+Inspired by [mtougeron/oncall-status](https://github.com/mtougeron/oncall-status).
+
 ## Installation
 
 Download app from [releases page](https://github.com/winebarrel/PDStatus/releases/latest).
