@@ -13,9 +13,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
+
   build:
     name: Build and analyse
     runs-on: macos-latest
+    needs:
+      - lint
     steps:
       - name: Checkout
         uses: actions/checkout@v4
