@@ -1,5 +1,4 @@
 import MenuBarExtraAccess
-import os
 import SwiftUI
 import UserNotifications
 import Valet
@@ -18,7 +17,6 @@ struct PDStatusApp: App {
     @State var incidents: Incidents = []
     @State var onCallStatus = StatusIcon.notOnCallWithoutIncident
     @State var updateError = ""
-    private let logger = Logger(subsystem: "winebarrel.PDStatus", category: "Application")
 
     private var popover: NSPopover = {
         let po = NSPopover()
@@ -76,7 +74,7 @@ struct PDStatusApp: App {
 
             userNotificationCenter.requestAuthorization(options: [.alert, .sound]) { authorized, _ in
                 guard authorized else {
-                    logger.debug("User notificationCentern not authorized")
+                    Log.shared.debug("User notificationCentern not authorized")
                     return
                 }
             }
