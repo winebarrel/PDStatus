@@ -59,11 +59,8 @@ class PagerDuty {
     }
 
     public func myOnCallShiftsURL() async throws -> URL {
-        let data = try await get(path: "/users/me")
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let resp = try decoder.decode(UsersMeResp.self, from: data)
-        let url = URL(string: resp.user.htmlUrl)!
+        let user = try await myUser()
+        let url = URL(string: user.htmlUrl)!
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         components.path = "/my-on-call/week"
 
@@ -75,12 +72,18 @@ class PagerDuty {
             return userId
         }
 
+        let user = try await myUser()
+
+        return user.id
+    }
+
+    public func myUser() async throws -> UsersMeResp.User {
         let data = try await get(path: "/users/me")
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let resp = try decoder.decode(UsersMeResp.self, from: data)
 
-        return resp.user.id
+        return resp.user
     }
 
     public func onCall(userId: String) async throws -> Bool {
