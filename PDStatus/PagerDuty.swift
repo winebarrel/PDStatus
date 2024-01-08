@@ -6,6 +6,7 @@ public struct UsersMeResp: Codable {
 
     public struct User: Codable {
         public let id: String
+        public let htmlUrl: String
     }
 }
 
@@ -55,6 +56,18 @@ class PagerDuty {
         let incidents = try await myIncidents(userId: userId)
 
         return (onCallNow, incidents)
+    }
+
+    public func myOnCallShiftsURL() async throws -> URL {
+        let data = try await get(path: "/users/me")
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let resp = try decoder.decode(UsersMeResp.self, from: data)
+        let url = URL(string: resp.user.htmlUrl)!
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+        components.path = "/my-on-call/week"
+
+        return components.url!
     }
 
     public func myUserID() async throws -> String {
