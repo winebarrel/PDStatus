@@ -1,11 +1,12 @@
 import SwiftUI
 
 struct RightClickMenu: View {
-    let updateStatus: () -> Void
+    @Binding var apiKey: String
+    let updateStatus: (Bool) -> Void
 
     var body: some View {
         Button("My Incidents") {
-            let pdcli = PagerDuty()
+            let pdcli = PagerDuty(apiKey: apiKey)
 
             Task {
                 do {
@@ -17,7 +18,7 @@ struct RightClickMenu: View {
             }
         }
         Button("My On-Call Shifts") {
-            let pdcli = PagerDuty()
+            let pdcli = PagerDuty(apiKey: apiKey)
 
             Task {
                 do {
@@ -30,7 +31,7 @@ struct RightClickMenu: View {
         }
         Divider()
         Button("Update Manually") {
-            updateStatus()
+            updateStatus(true)
         }
 #if swift(>=5.9)
         SettingsLink {
@@ -48,6 +49,9 @@ struct RightClickMenu: View {
 
 #if swift(>=5.9)
 #Preview {
-    RightClickMenu(updateStatus: {})
+    RightClickMenu(
+        apiKey: .constant(""),
+        updateStatus: { _ in }
+    )
 }
 #endif

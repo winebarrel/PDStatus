@@ -47,7 +47,7 @@ func - (left: Incidents, right: Incidents) -> Incidents {
 
 struct PagerDuty {
     private let apiEndpoint = URL(string: "https://api.pagerduty.com/")!
-    @AppSecureStorage("apiKey") private var apiKey
+    public var apiKey: String
     @AppStorage("userId") private var userId = ""
 
     public func update() async throws -> (Bool, Incidents) {
