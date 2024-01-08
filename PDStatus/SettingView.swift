@@ -9,11 +9,11 @@ struct SettingView: View {
 
     var body: some View {
         Form {
+#if swift(>=5.9)
             SecureField("API Key", text: $apiKey).onChange(of: apiKey) {
                 SharedValet.updateUserID(apiKey)
             }
             TextField("User ID (optional)", text: $userId)
-#if swift(>=5.9)
             Toggle("Launch at login", isOn: $launchAtLogin)
                 .onChange(of: launchAtLogin) {
                     do {
