@@ -1,3 +1,24 @@
 # PDStatus
 
 [![CI](https://github.com/winebarrel/PDStatus/actions/workflows/ci.yml/badge.svg)](https://github.com/winebarrel/PDStatus/actions/workflows/ci.yml)
+
+PDStatus is a utility app that shows PagerDuty status on the menu bar.
+
+## Features
+
+### Show assigned incidents
+
+![](https://github.com/winebarrel/PDStatus/assets/117768/ce4b8336-b3b3-4deb-a180-7b7d642d951a)
+
+### Notifications
+
+![](https://github.com/winebarrel/PDStatus/assets/117768/166b2281-0c0a-4476-8aa8-cbd3c8222433)
+
+### Show PagerDuty status with icon
+
+| Icon | Status |
+| - | - |
+| ![](https://github.com/winebarrel/PDStatus/assets/117768/240f9007-7fd7-4224-8730-0308e5156be4) | on-call |
+| ![](https://github.com/winebarrel/PDStatus/assets/117768/fce3b9c1-ab71-4dbf-82a1-add62281a339) | on-call (with assigned incidents) |
+| ![](https://github.com/winebarrel/PDStatus/assets/117768/8481ae6b-a75e-4724-9238-79a114a58eaf) | not on-call |
+| ![](https://github.com/winebarrel/PDStatus/assets/117768/254f95a9-ad05-4cce-83b1-67601aaf2ddc) | not on-call (with assigned incidents) |
