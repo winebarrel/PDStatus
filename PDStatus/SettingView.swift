@@ -12,6 +12,7 @@ struct SettingView: View {
             SecureField("API Key", text: $apiKey)
             TextField("User ID (optional)", text: $userId)
             Toggle("Launch at login", isOn: $launchAtLogin)
+            #if swift(>=5.9)
                 .onChange(of: launchAtLogin) {
                     do {
                         if launchAtLogin {
@@ -23,6 +24,7 @@ struct SettingView: View {
                         Log.shared.debug("Failed to set 'Launch at login': \(error)")
                     }
                 }
+            #endif
         }
         .padding(20)
         .frame(width: 400)
@@ -33,7 +35,7 @@ struct SettingView: View {
 }
 
 #if swift(>=5.9)
-#Preview {
-    SettingView(updateStatus: {})
-}
+    #Preview {
+        SettingView(updateStatus: {})
+    }
 #endif
