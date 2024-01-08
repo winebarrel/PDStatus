@@ -17,6 +17,7 @@ struct PDStatusApp: App {
     @State var incidents: Incidents = []
     @State var onCallStatus = StatusIcon.notOnCallWithoutIncident
     @State var updateError = ""
+    @State var apiKey = ""
 
     private var popover: NSPopover = {
         let pop = NSPopover()
@@ -25,8 +26,8 @@ struct PDStatusApp: App {
         return pop
     }()
 
-    func updateStatus() {
-        let pdcli = PagerDuty()
+    func updateStatus(_ showError: Bool) {
+        let pdcli = PagerDuty(apiKey: apiKey)
 
         Task {
             do {
@@ -56,8 +57,12 @@ struct PDStatusApp: App {
                     }
                 }
             } catch {
-                onCallStatus = .error
-                updateError = error.localizedDescription
+                if showError {
+                    onCallStatus = .error
+                    updateError = error.localizedDescription
+                } else {
+                    Log.shared.debug("failed to update PagerDuty status: \(error)")
+                }
             }
         }
     }
@@ -65,16 +70,25 @@ struct PDStatusApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         MenuBarExtra {
-            RightClickMenu(updateStatus: updateStatus)
+            RightClickMenu(
+                apiKey: $apiKey,
+                updateStatus: updateStatus
+            )
         } label: {
             Image(systemName: onCallStatus.rawValue)
             Text("PD").foregroundStyle(Color.blue)
         }.menuBarExtraAccess(isPresented: $isMenuPresented) { statusItem in
+            do {
+                apiKey = try SharedValet.userID()
+            } catch {
+                Log.shared.debug("failed to get UserID from Valet: \(error)")
+            }
+
             let userNotificationCenter = UNUserNotificationCenter.current()
 
             userNotificationCenter.requestAuthorization(options: [.alert, .sound]) { authorized, _ in
                 guard authorized else {
-                    Log.shared.debug("User notificationCentern not authorized")
+                    Log.shared.debug("user notificationCentern not authorized")
                     return
                 }
             }
@@ -98,12 +112,15 @@ struct PDStatusApp: App {
                 button.addSubview(mouseHandlerView)
 
                 Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { _ in
-                    updateStatus()
+                    updateStatus(false)
                 }.fire()
             }
         }
         Settings {
-            SettingView(updateStatus: updateStatus)
+            SettingView(
+                apiKey: $apiKey,
+                updateStatus: updateStatus
+            )
         }
     }
 }

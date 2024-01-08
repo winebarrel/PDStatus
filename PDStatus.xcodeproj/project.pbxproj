@@ -11,7 +11,7 @@
 		AD99F7272B48E32600DD7E59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD99F7262B48E32600DD7E59 /* Assets.xcassets */; };
 		AD99F72A2B48E32600DD7E59 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD99F7292B48E32600DD7E59 /* Preview Assets.xcassets */; };
 		ADBD8BAC2B490079005B4881 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = ADBD8BAB2B490079005B4881 /* Valet */; };
-		ADBD8BAE2B4901C4005B4881 /* AppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBD8BAD2B4901C4005B4881 /* AppSecureStorage.swift */; };
+		ADBD8BAE2B4901C4005B4881 /* SharedValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBD8BAD2B4901C4005B4881 /* SharedValet.swift */; };
 		ADBD8BB02B4914D3005B4881 /* PagerDuty.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBD8BAF2B4914D3005B4881 /* PagerDuty.swift */; };
 		ADEA40642B4B9D550030C1F4 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEA40632B4B9D550030C1F4 /* Log.swift */; };
 		ADFA899C2B48E50E00FE71F7 /* RightClickMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */; };
@@ -27,7 +27,7 @@
 		AD99F7262B48E32600DD7E59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD99F7292B48E32600DD7E59 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AD99F72B2B48E32600DD7E59 /* PDStatus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PDStatus.entitlements; sourceTree = "<group>"; };
-		ADBD8BAD2B4901C4005B4881 /* AppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecureStorage.swift; sourceTree = "<group>"; };
+		ADBD8BAD2B4901C4005B4881 /* SharedValet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedValet.swift; sourceTree = "<group>"; };
 		ADBD8BAF2B4914D3005B4881 /* PagerDuty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerDuty.swift; sourceTree = "<group>"; };
 		ADEA40632B4B9D550030C1F4 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightClickMenu.swift; sourceTree = "<group>"; };
@@ -69,7 +69,6 @@
 			isa = PBXGroup;
 			children = (
 				AD99F72B2B48E32600DD7E59 /* PDStatus.entitlements */,
-				ADBD8BAD2B4901C4005B4881 /* AppSecureStorage.swift */,
 				ADFA89A22B48EAE800FE71F7 /* ContentView.swift */,
 				ADEA40632B4B9D550030C1F4 /* Log.swift */,
 				ADFA89A02B48E90E00FE71F7 /* MouseHandlerView.swift */,
@@ -77,6 +76,7 @@
 				AD99F7222B48E32500DD7E59 /* PDStatusApp.swift */,
 				ADFA899B2B48E50E00FE71F7 /* RightClickMenu.swift */,
 				ADFA89A62B48EC2C00FE71F7 /* SettingView.swift */,
+				ADBD8BAD2B4901C4005B4881 /* SharedValet.swift */,
 				AD99F7262B48E32600DD7E59 /* Assets.xcassets */,
 				AD99F7282B48E32600DD7E59 /* Preview Content */,
 			);
@@ -192,7 +192,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADBD8BAE2B4901C4005B4881 /* AppSecureStorage.swift in Sources */,
+				ADBD8BAE2B4901C4005B4881 /* SharedValet.swift in Sources */,
 				ADFA899C2B48E50E00FE71F7 /* RightClickMenu.swift in Sources */,
 				ADBD8BB02B4914D3005B4881 /* PagerDuty.swift in Sources */,
 				ADFA89A72B48EC2C00FE71F7 /* SettingView.swift in Sources */,
