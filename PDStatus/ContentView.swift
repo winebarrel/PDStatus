@@ -17,14 +17,14 @@ struct ContentView: View {
                 }
             }
         } else if incidents.count > 0 {
-            List(incidents) { i in
-                Link(destination: URL(string: i.htmlUrl)!) {
-                    Text(i.title)
+            List(incidents) { inc in
+                Link(destination: URL(string: inc.htmlUrl)!) {
+                    Text(inc.title)
                         .multilineTextAlignment(.leading)
                 }
-                .underline(hoverId == i.id)
+                .underline(hoverId == inc.id)
                 .onHover { hovering in
-                    hoverId = hovering ? i.id : ""
+                    hoverId = hovering ? inc.id : ""
                 }
             }
         } else {
@@ -47,7 +47,7 @@ struct ContentView: View {
         incidents: .constant([
             IncidentsResp.Incident(id: "1", title: "!!! INCIDENT 1 !!!", htmlUrl: "http://example.coo/1"),
             IncidentsResp.Incident(id: "2", title: "!!! INCIDENT 2 !!!", htmlUrl: "http://example.coo/2"),
-            IncidentsResp.Incident(id: "3", title: "!!! INCIDENT 3 !!!", htmlUrl: "http://example.coo/3"),
+            IncidentsResp.Incident(id: "3", title: "!!! INCIDENT 3 !!!", htmlUrl: "http://example.coo/3")
         ]),
         updateError: .constant("")
     )

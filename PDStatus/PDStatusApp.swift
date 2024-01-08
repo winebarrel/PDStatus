@@ -19,18 +19,18 @@ struct PDStatusApp: App {
     @State var updateError = ""
 
     private var popover: NSPopover = {
-        let po = NSPopover()
-        po.behavior = .transient
-        po.animates = false
-        return po
+        let pop = NSPopover()
+        pop.behavior = .transient
+        pop.animates = false
+        return pop
     }()
 
     func updateStatus() {
-        let pd = PagerDuty()
+        let pdcli = PagerDuty()
 
         Task {
             do {
-                let (onCallNow, incs) = try await pd.update()
+                let (onCallNow, incs) = try await pdcli.update()
                 updateError = ""
                 let newIncs = incs - incidents
                 incidents.replaceAll(incs)
@@ -45,12 +45,12 @@ struct PDStatusApp: App {
                     Task {
                         let userNotificationCenter = UNUserNotificationCenter.current()
 
-                        for i in newIncs {
+                        for inc in newIncs {
                             let content = UNMutableNotificationContent()
-                            content.title = i.title
-                            content.userInfo = ["url": i.htmlUrl]
+                            content.title = inc.title
+                            content.userInfo = ["url": inc.htmlUrl]
                             content.sound = UNNotificationSound.default
-                            let req = UNNotificationRequest(identifier: "winebarrel.PDStatus.\(i.id)", content: content, trigger: nil)
+                            let req = UNNotificationRequest(identifier: "winebarrel.PDStatus.\(inc.id)", content: content, trigger: nil)
                             try? await userNotificationCenter.add(req)
                         }
                     }
@@ -117,8 +117,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        let url = URL(string: userInfo["url"] as! String)!
-        NSWorkspace.shared.open(url)
+
+        guard let url = userInfo["url"] as? String else {
+            fatalError("failed to cast userInfo['url'] to String")
+        }
+
+        NSWorkspace.shared.open(URL(string: url)!)
         completionHandler()
     }
 }
