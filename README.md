@@ -22,3 +22,11 @@ PDStatus is a utility app that shows PagerDuty status on the menu bar.
 | ![](https://github.com/winebarrel/PDStatus/assets/117768/fce3b9c1-ab71-4dbf-82a1-add62281a339) | on-call (with assigned incidents) |
 | ![](https://github.com/winebarrel/PDStatus/assets/117768/8481ae6b-a75e-4724-9238-79a114a58eaf) | not on-call |
 | ![](https://github.com/winebarrel/PDStatus/assets/117768/254f95a9-ad05-4cce-83b1-67601aaf2ddc) | not on-call (with assigned incidents) |
+
+## Getting Started
+
+1. [Generate a User Token REST API Key.](https://support.pagerduty.com/docs/api-access-keys#generate-a-user-token-rest-api-key)
+2. Set API Key.
+
+![](https://github.com/winebarrel/PDStatus/assets/117768/21364662-aa1d-4cfc-a6e7-7c3aa8041d26) ![](https://github.com/winebarrel/PDStatus/assets/117768/7379a906-d5ff-44dc-8a27-d0e5c5ca9517)
+
