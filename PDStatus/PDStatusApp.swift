@@ -133,7 +133,6 @@ struct PDStatusApp: App {
                 interval: $interval
             ).onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
                 if let window = notification.object as? NSWindow, window.title == "PDStatus Settings" {
-                    updateStatus(false)
                     startTimer()
                 }
             }
