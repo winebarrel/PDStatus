@@ -19,6 +19,8 @@ struct PDStatusApp: App {
     @State var updateError = ""
     @State var apiKey = ""
     @State var updatedAt: Date?
+    @State var timer: Timer?
+    @State var interval: TimeInterval = 300
 
     private var popover: NSPopover = {
         let pop = NSPopover()
@@ -70,6 +72,14 @@ struct PDStatusApp: App {
         }
     }
 
+    func startTimer() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+            updateStatus(false)
+        }
+        timer?.fire()
+    }
+
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         MenuBarExtra {
@@ -114,17 +124,19 @@ struct PDStatusApp: App {
                 }
 
                 button.addSubview(mouseHandlerView)
-
-                Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { _ in
-                    updateStatus(false)
-                }.fire()
+                startTimer()
             }
         }
         Settings {
             SettingView(
                 apiKey: $apiKey,
-                updateStatus: updateStatus
-            )
+                interval: $interval
+            ).onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
+                if let window = notification.object as? NSWindow, window.title == "PDStatus Settings" {
+                    updateStatus(false)
+                    startTimer()
+                }
+            }
         }
     }
 }
