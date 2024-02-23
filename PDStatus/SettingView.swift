@@ -5,7 +5,7 @@ struct SettingView: View {
     @Binding var apiKey: String
     @AppStorage("userId") private var userId = ""
     @State private var launchAtLogin: Bool = SMAppService.mainApp.status == .enabled
-    @Binding var interval: TimeInterval
+    @AppStorage("interval") private var interval: TimeInterval = 300
     var body: some View {
         Form {
             SecureField("API Key", text: $apiKey).onChange(of: apiKey) {
@@ -40,7 +40,6 @@ struct SettingView: View {
 
 #Preview {
     SettingView(
-        apiKey: .constant(""),
-        interval: .constant(300)
+        apiKey: .constant("")
     )
 }
