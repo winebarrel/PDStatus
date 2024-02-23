@@ -8,7 +8,6 @@ struct SettingView: View {
     @Binding var interval: TimeInterval
     var body: some View {
         Form {
-#if swift(>=5.9)
             SecureField("API Key", text: $apiKey).onChange(of: apiKey) {
                 SharedValet.updateUserID(apiKey)
             }
@@ -33,20 +32,15 @@ struct SettingView: View {
                         Log.shared.debug("failed to set 'Launch at login': \(error)")
                     }
                 }
-#else
-            #warning("requires swift 5.9 or higher")
-#endif
         }
         .padding(20)
         .frame(width: 400)
     }
 }
 
-#if swift(>=5.9)
 #Preview {
     SettingView(
         apiKey: .constant(""),
         interval: .constant(300)
     )
 }
-#endif

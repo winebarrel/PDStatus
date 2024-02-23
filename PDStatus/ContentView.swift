@@ -59,7 +59,6 @@ struct ContentView: View {
     }
 }
 
-#if swift(>=5.9)
 #Preview {
     ContentView(
         incidents: .constant([
@@ -71,4 +70,3 @@ struct ContentView: View {
         updatedAt: .constant(Date())
     )
 }
-#endif
