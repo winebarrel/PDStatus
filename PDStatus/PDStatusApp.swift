@@ -21,7 +21,7 @@ struct PDStatusApp: App {
     @State var apiKey = SharedValet.apiKey
     @State var updatedAt: Date?
     @State var timer: Timer?
-    @State var interval: TimeInterval = 300
+    @AppStorage("interval") private var interval: TimeInterval = 300
 
     private var popover: NSPopover = {
         let pop = NSPopover()
@@ -130,8 +130,7 @@ struct PDStatusApp: App {
         }
         Settings {
             SettingView(
-                apiKey: $apiKey,
-                interval: $interval
+                apiKey: $apiKey
             ).onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
                 if let window = notification.object as? NSWindow, window.title == "PDStatus Settings" {
                     startTimer()
