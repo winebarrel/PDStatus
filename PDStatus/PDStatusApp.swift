@@ -91,12 +91,7 @@ struct PDStatusApp: App {
             Image(systemName: onCallStatus.rawValue)
             Text("PD").foregroundStyle(Color.blue)
         }.menuBarExtraAccess(isPresented: $isMenuPresented) { statusItem in
-            do {
-                apiKey = try SharedValet.userID()
-            } catch {
-                Log.shared.debug("failed to get UserID from Valet: \(error)")
-            }
-
+            apiKey = SharedValet.apiKey
             let userNotificationCenter = UNUserNotificationCenter.current()
 
             userNotificationCenter.requestAuthorization(options: [.alert, .sound]) { authorized, _ in
