@@ -14,13 +14,13 @@ enum StatusIcon: String {
 @main
 struct PDStatusApp: App {
     @State private var initialized = false
-    @State var isMenuPresented: Bool = false
-    @State var incidents: Incidents = []
-    @State var onCallStatus = StatusIcon.notOnCallWithoutIncident
-    @State var updateError = ""
-    @State var apiKey = SharedValet.apiKey
-    @State var updatedAt: Date?
-    @State var timer: Timer?
+    @State private var isMenuPresented: Bool = false
+    @State private var incidents: Incidents = []
+    @State private var onCallStatus = StatusIcon.notOnCallWithoutIncident
+    @State private var updateError = ""
+    @State private var apiKey = SharedValet.apiKey
+    @State private var updatedAt: Date?
+    @State private var timer: Timer?
     @AppStorage("interval") private var interval: TimeInterval = 300
 
     private var popover: NSPopover = {

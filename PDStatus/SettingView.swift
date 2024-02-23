@@ -6,6 +6,7 @@ struct SettingView: View {
     @AppStorage("userId") private var userId = ""
     @State private var launchAtLogin: Bool = SMAppService.mainApp.status == .enabled
     @AppStorage("interval") private var interval: TimeInterval = 300
+
     var body: some View {
         Form {
             SecureField("API Key", text: $apiKey).onChange(of: apiKey) {

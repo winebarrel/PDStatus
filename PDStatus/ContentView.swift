@@ -4,7 +4,7 @@ struct ContentView: View {
     @Binding var incidents: Incidents
     @Binding var updateError: String
     @Binding var updatedAt: Date?
-    @State var hoverId: String = ""
+    @State private var hoverId: String = ""
     private let dateFmt = {
         let dtfmt = DateFormatter()
         dtfmt.dateStyle = .none
