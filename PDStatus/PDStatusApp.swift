@@ -131,10 +131,8 @@ struct PDStatusApp: App {
         Settings {
             SettingView(
                 apiKey: $apiKey
-            ).onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
-                if let window = notification.object as? NSWindow, window.title == "PDStatus Settings" {
-                    startTimer()
-                }
+            ).onClosed {
+                startTimer()
             }
         }
     }
