@@ -13,11 +13,12 @@ enum StatusIcon: String {
 
 @main
 struct PDStatusApp: App {
+    @State private var initialized = false
     @State var isMenuPresented: Bool = false
     @State var incidents: Incidents = []
     @State var onCallStatus = StatusIcon.notOnCallWithoutIncident
     @State var updateError = ""
-    @State var apiKey = ""
+    @State var apiKey = SharedValet.apiKey
     @State var updatedAt: Date?
     @State var timer: Timer?
     @State var interval: TimeInterval = 300
@@ -28,6 +29,22 @@ struct PDStatusApp: App {
         pop.animates = false
         return pop
     }()
+
+    private func initialize() {
+        let userNotificationCenter = UNUserNotificationCenter.current()
+
+        userNotificationCenter.requestAuthorization(options: [.alert, .sound]) { authorized, _ in
+            guard authorized else {
+                Log.shared.debug("user notificationCentern not authorized")
+                return
+            }
+        }
+
+        let view = ContentView(incidents: $incidents, updateError: $updateError, updatedAt: $updatedAt)
+        popover.contentViewController = NSHostingController(rootView: view)
+
+        startTimer()
+    }
 
     func updateStatus(_ showError: Bool) {
         let pdcli = PagerDuty(apiKey: apiKey)
@@ -91,19 +108,9 @@ struct PDStatusApp: App {
             Image(systemName: onCallStatus.rawValue)
             Text("PD").foregroundStyle(Color.blue)
         }.menuBarExtraAccess(isPresented: $isMenuPresented) { statusItem in
-            apiKey = SharedValet.apiKey
-            let userNotificationCenter = UNUserNotificationCenter.current()
-
-            userNotificationCenter.requestAuthorization(options: [.alert, .sound]) { authorized, _ in
-                guard authorized else {
-                    Log.shared.debug("user notificationCentern not authorized")
-                    return
-                }
-            }
-
-            if popover.contentViewController == nil {
-                let view = ContentView(incidents: $incidents, updateError: $updateError, updatedAt: $updatedAt)
-                popover.contentViewController = NSHostingController(rootView: view)
+            if !initialized {
+                initialize()
+                initialized = true
             }
 
             if let button = statusItem.button {
@@ -119,7 +126,6 @@ struct PDStatusApp: App {
                 }
 
                 button.addSubview(mouseHandlerView)
-                startTimer()
             }
         }
         Settings {
