@@ -36,6 +36,14 @@ struct SettingView: View {
         .padding(20)
         .frame(width: 400)
     }
+
+    func onClosed(_ action: @escaping () -> Void) -> some View {
+        onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
+            if let window = notification.object as? NSWindow, window.title == "PDStatus Settings" {
+                action()
+            }
+        }
+    }
 }
 
 #Preview {
