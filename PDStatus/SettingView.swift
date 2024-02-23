@@ -33,6 +33,13 @@ struct SettingView: View {
                         Log.shared.debug("failed to set 'Launch at login': \(error)")
                     }
                 }
+
+            // swiftlint:disable force_cast
+            let appVer = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+            let buildVer = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+            // swiftlint:enable force_cast
+            Link("Ver. \(appVer).\(buildVer)", destination: URL(string: "https://github.com/winebarrel/PDStatus")!)
+                .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding(20)
         .frame(width: 400)
