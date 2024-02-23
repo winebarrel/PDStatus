@@ -33,13 +33,9 @@ struct RightClickMenu: View {
         Button("Update Manually") {
             updateStatus(true)
         }
-#if swift(>=5.9)
         SettingsLink {
             Text("Settings")
         }
-#else
-        #warning("requires swift 5.9 or higher")
-#endif
         Divider()
         Button("Quit") {
             NSApplication.shared.terminate(self)
@@ -47,11 +43,9 @@ struct RightClickMenu: View {
     }
 }
 
-#if swift(>=5.9)
 #Preview {
     RightClickMenu(
         apiKey: .constant(""),
         updateStatus: { _ in }
     )
 }
-#endif
