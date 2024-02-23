@@ -9,7 +9,7 @@ struct SettingView: View {
     var body: some View {
         Form {
             SecureField("API Key", text: $apiKey).onChange(of: apiKey) {
-                SharedValet.updateUserID(apiKey)
+                SharedValet.apiKey = apiKey
             }
             TextField("Interval (sec)", value: $interval, format: .number.grouping(.never))
                 .onChange(of: interval) {

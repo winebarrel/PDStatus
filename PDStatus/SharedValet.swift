@@ -4,19 +4,32 @@ import Valet
 enum SharedValet {
     static let shared = Valet.valet(with: Identifier(nonEmpty: "winebarrel.PDStatus")!, accessibility: .whenUnlocked)
 
-    static func userID() throws -> String {
-        try SharedValet.shared.string(forKey: "userId")
-    }
-
-    static func updateUserID(_ newValue: String) {
-        do {
-            if !newValue.isEmpty {
-                try SharedValet.shared.setString(newValue, forKey: "userId")
-            } else {
-                try SharedValet.shared.removeObject(forKey: "userId")
+    static var apiKey: String {
+        get {
+            do {
+                // XXX: Use the key "userId" for compatibility
+                return try self.shared.string(forKey: "userId")
+            } catch KeychainError.itemNotFound {
+                // nothing to do
+            } catch {
+                Log.shared.error("failed to get apiKey from Valet: \(error)")
             }
-        } catch {
-            Log.shared.debug("failed to set UserID to Valet: \(error)")
+
+            return ""
+        }
+
+        set(apiKey) {
+            do {
+                if apiKey.isEmpty {
+                    // XXX: Use the key "userId" for compatibility
+                    try self.shared.removeObject(forKey: "userId")
+                } else {
+                    // XXX: Use the key "userId" for compatibility
+                    try self.shared.setString(apiKey, forKey: "userId")
+                }
+            } catch {
+                Log.shared.error("failed to set apiKey to Valet: \(error)")
+            }
         }
     }
 }
