@@ -8,7 +8,7 @@ enum SharedValet {
         get {
             do {
                 // XXX: Use the key "userId" for compatibility
-                return try self.shared.string(forKey: "userId")
+                return try shared.string(forKey: "userId")
             } catch KeychainError.itemNotFound {
                 // nothing to do
             } catch {
@@ -22,10 +22,10 @@ enum SharedValet {
             do {
                 if apiKey.isEmpty {
                     // XXX: Use the key "userId" for compatibility
-                    try self.shared.removeObject(forKey: "userId")
+                    try shared.removeObject(forKey: "userId")
                 } else {
                     // XXX: Use the key "userId" for compatibility
-                    try self.shared.setString(apiKey, forKey: "userId")
+                    try shared.setString(apiKey, forKey: "userId")
                 }
             } catch {
                 Log.shared.error("failed to set apiKey to Valet: \(error)")
