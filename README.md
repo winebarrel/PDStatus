@@ -2,6 +2,12 @@
 
 [![CI](https://github.com/winebarrel/PDStatus/actions/workflows/ci.yml/badge.svg)](https://github.com/winebarrel/PDStatus/actions/workflows/ci.yml)
 
+> [!note]
+> Currently developing the new tool.
+> See https://github.com/winebarrel/PagerCall
+
+## Usage
+
 PDStatus is a utility app that shows PagerDuty status on the menu bar.
 
 Inspired by [mtougeron/oncall-status](https://github.com/mtougeron/oncall-status).
